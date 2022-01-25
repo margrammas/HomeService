@@ -281,7 +281,7 @@ Directory Structure
 ```
 git clone https://github.com/margrammas/HomeService.git
 ```
-* Navigate to the `src` folder and clone the necessary repositories if needed (you might be able to skip this ste<p if rep is cloned properly) 
+* Navigate to the `src` folder and clone the necessary repositories if needed (you might be able to skip this step if rep is cloned properly) 
 ```
 cd /home/workspace/HomeService/catkin_ws/src  
 git clone https://github.com/ros-perception/slam_gmapping.git  
@@ -305,6 +305,6 @@ Enjoy!
 
 ## Tips  
 1. It's recommended to update and upgrade your environment before running the code.  
-```
+```bash
 sudo apt-get update && sudo apt-get upgrade -y
 ```
