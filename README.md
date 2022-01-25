@@ -13,7 +13,7 @@ A functional map of the environment should be created which would be used for lo
 You will create a `test_navigation.sh` script file to launch it for manual navigation test.  
 Your robot should be able to navigate in the environment after a 2D Nav Goal command is issued.  
 You will create a `pick_objects.sh` file that will send multiple goals for the robot to reach.  
-The robot travels to the desired pickup zone, displays a message that it reached its destination, waits 5 seconds, travels to the desired drop off zone, and displays a message that it reached the drop off zone."  
+The robot travels to the desired pickup zone, displays a message that it reached its destination, waits 5 seconds, travels to the desired drop off zone, and displays a message that it reached the drop off zone.  
 ### Home Service Functions  
 You will create a `add_marker.sh` file that will publish a marker to rviz.  
 The marker should initially be published at the pickup zone. After 5 seconds it should be hidden. Then after another 5 seconds it should appear at the drop off zone.
@@ -61,45 +61,219 @@ sudo apt-get install ros-kinetic-amcl
 ```bash
 sudo apt-get update && sudo apt-get upgrade -y
 ```
-4. On the command line and execute  
-```
-cd /home/workspace/HomeService/catkin_ws/src  
-git clone https://github.com/ros-perception/slam_gmapping.git  
-git clone https://github.com/turtlebot/turtlebot.git  
-git clone https://github.com/turtlebot/turtlebot_interactions.git  
-git clone https://github.com/turtlebot/turtlebot_simulator.git  
-```
-5. Build and run your code.  
+4. Build and run your code.  
 
 ## Project Description  
 Directory Structure  
 ```
 .Home-Sevice-Robot                                        # Home Service Robot Project
-├── catkin_ws                                             # Catkin workspace
-│   ├── src
-│   │   ├── add_markers                                   # add_markers package        
-│   │   │   ├── launch
-│   │   │   │   ├── view_home_service_navigation.launch   # launch file for home service robot demo
-│   │   │   ├── src
-│   │   │   │   ├── add_markers.cpp                       # source code for add_markers node
-│   │   │   │   ├── add_markers_demo.cpp                  # source code for add_markers_demo
-│   │   ├── pick_objects                                  # pick_objects package     
-│   │   │   ├── src
-│   │   │   │   ├── pick_objects.cpp                      # source code for pick_objects node
-│   │   │   │   ├── pick_objects_demo.cpp                 # source code for pick_objects_demo
-│   │   ├── rvizConfig                                    # rvizConfig package        
-│   │   │   ├── home_service_rvizConfig.rviz              # rvizConfig file for home service robot demo  
-│   │   ├── scripts                                       # shell scripts files
-│   │   │   ├── add_marker.sh                             # shell script to model virtual objects  
-│   │   │   ├── home_service.sh                           # shell script to launch home service robot demo  
-│   │   │   ├── pick_objects.sh                           # shell script to send multiple goals  
-│   │   │   ├── test_navigation.sh                        # shell script to test localization and navigation
-│   │   │   ├── test_slam.sh                              # shell script to test SLAM
-│   │   ├── slam_gmapping                                 # gmapping_demo.launch file
-│   │   ├── turtlebot                                     # keyboard_teleop.launch file
-│   │   ├── turtlebot_interactions                        # view_navigation.launch file
-│   │   ├── turtlebot_simulator                           # turtlebot_world.launch file package        
-│   │   ├── CMakeLists.txt                                # compiler instructions
+/home/workspace/HomeService
+├── catkin_ws
+│   ├── build
+│   │   ├── add_markers
+│   │   │   ├── catkin_generated
+│   │   │   ├── CMakeFiles
+│   │   │   ├── cmake_install.cmake
+│   │   │   ├── CTestTestfile.cmake
+│   │   │   └── Makefile
+│   │   ├── atomic_configure
+│   │   │   ├── env.sh
+│   │   │   ├── local_setup.bash
+│   │   │   ├── local_setup.sh
+│   │   │   ├── local_setup.zsh
+│   │   │   ├── setup.bash
+│   │   │   ├── setup.sh
+│   │   │   ├── _setup_util.py
+│   │   │   └── setup.zsh
+│   │   ├── catkin
+│   │   │   └── catkin_generated
+│   │   ├── catkin_generated
+│   │   │   ├── env_cached.sh
+│   │   │   ├── generate_cached_setup.py
+│   │   │   ├── installspace
+│   │   │   ├── metapackages
+│   │   │   ├── order_packages.cmake
+│   │   │   ├── order_packages.py
+│   │   │   ├── setup_cached.sh
+│   │   │   └── stamps
+│   │   ├── CATKIN_IGNORE
+│   │   ├── catkin_make.cache
+│   │   ├── CMakeCache.txt
+│   │   ├── CMakeFiles
+│   │   │   ├── 3.5.1
+│   │   │   ├── clean_test_results.dir
+│   │   │   ├── cmake.check_cache
+│   │   │   ├── CMakeDirectoryInformation.cmake
+│   │   │   ├── CMakeError.log
+│   │   │   ├── CMakeOutput.log
+│   │   │   ├── CMakeRuleHashes.txt
+│   │   │   ├── CMakeTmp
+│   │   │   ├── download_extra_data.dir
+│   │   │   ├── doxygen.dir
+│   │   │   ├── feature_tests.bin
+│   │   │   ├── feature_tests.c
+│   │   │   ├── feature_tests.cxx
+│   │   │   ├── Makefile2
+│   │   │   ├── Makefile.cmake
+│   │   │   ├── progress.marks
+│   │   │   ├── run_tests.dir
+│   │   │   ├── TargetDirectories.txt
+│   │   │   └── tests.dir
+│   │   ├── cmake_install.cmake
+│   │   ├── CTestConfiguration.ini
+│   │   ├── CTestCustom.cmake
+│   │   ├── CTestTestfile.cmake
+│   │   ├── gtest
+│   │   │   ├── CMakeFiles
+│   │   │   ├── cmake_install.cmake
+│   │   │   ├── CTestTestfile.cmake
+│   │   │   ├── gtest
+│   │   │   └── Makefile
+│   │   ├── Makefile
+│   │   ├── my_robot
+│   │   │   ├── catkin_generated
+│   │   │   ├── CMakeFiles
+│   │   │   ├── cmake_install.cmake
+│   │   │   ├── CTestTestfile.cmake
+│   │   │   └── Makefile
+│   │   ├── pick_objects
+│   │   │   ├── catkin_generated
+│   │   │   ├── CMakeFiles
+│   │   │   ├── cmake_install.cmake
+│   │   │   ├── CTestTestfile.cmake
+│   │   │   └── Makefile
+│   │   ├── slam_gmapping
+│   │   │   ├── gmapping
+│   │   │   └── slam_gmapping
+│   │   ├── teleop_twist_keyboard
+│   │   │   ├── catkin_generated
+│   │   │   ├── CMakeFiles
+│   │   │   ├── cmake_install.cmake
+│   │   │   ├── CTestTestfile.cmake
+│   │   │   └── Makefile
+│   │   ├── test_results
+│   │   ├── turtlebot
+│   │   │   ├── turtlebot
+│   │   │   ├── turtlebot_bringup
+│   │   │   ├── turtlebot_capabilities
+│   │   │   ├── turtlebot_description
+│   │   │   └── turtlebot_teleop
+│   │   ├── turtlebot_interactions
+│   │   │   ├── turtlebot_dashboard
+│   │   │   ├── turtlebot_interactions
+│   │   │   ├── turtlebot_interactive_markers
+│   │   │   └── turtlebot_rviz_launchers
+│   │   └── turtlebot_simulator
+│   │       ├── turtlebot_gazebo
+│   │       ├── turtlebot_simulator
+│   │       ├── turtlebot_stage
+│   │       └── turtlebot_stdr
+│   ├── devel
+│   │   ├── cmake.lock
+│   │   ├── env.sh
+│   │   ├── etc
+│   │   │   └── catkin
+│   │   ├── lib
+│   │   │   ├── add_markers
+│   │   │   ├── gmapping
+│   │   │   ├── libslam_gmapping_nodelet.so
+│   │   │   ├── pick_objects
+│   │   │   ├── pkgconfig
+│   │   │   ├── turtlebot_description
+│   │   │   ├── turtlebot_interactive_markers
+│   │   │   └── turtlebot_teleop
+│   │   ├── local_setup.bash
+│   │   ├── local_setup.sh
+│   │   ├── local_setup.zsh
+│   │   ├── setup.bash
+│   │   ├── setup.sh
+│   │   ├── _setup_util.py
+│   │   ├── setup.zsh
+│   │   └── share
+│   │       ├── add_markers
+│   │       ├── gmapping
+│   │       ├── my_robot
+│   │       ├── pick_objects
+│   │       ├── teleop_twist_keyboard
+│   │       ├── turtlebot_bringup
+│   │       ├── turtlebot_capabilities
+│   │       ├── turtlebot_dashboard
+│   │       ├── turtlebot_description
+│   │       ├── turtlebot_gazebo
+│   │       ├── turtlebot_interactive_markers
+│   │       ├── turtlebot_rviz_launchers
+│   │       ├── turtlebot_stage
+│   │       ├── turtlebot_stdr
+│   │       └── turtlebot_teleop
+│   └── src
+│       ├── add_markers
+│       │   ├── CMakeLists.txt
+│       │   ├── launch
+│       │   ├── package.xml
+│       │   └── src
+│       ├── CMakeLists.txt -> /opt/ros/kinetic/share/catkin/cmake/toplevel.cmake
+│       ├── map
+│       │   ├── map.pgm
+│       │   └── map.yaml
+│       ├── my_robot
+│       │   ├── CMakeLists.txt
+│       │   ├── config
+│       │   ├── launch
+│       │   ├── maps
+│       │   ├── meshes
+│       │   ├── package.xml
+│       │   ├── urdf
+│       │   └── worlds
+│       ├── pick_objects
+│       │   ├── CMakeLists.txt
+│       │   ├── package.xml
+│       │   └── src
+│       ├── rvizConfig
+│       │   └── home_service_rvizConfig.rviz
+│       ├── scripts
+│       │   ├── add_marker.sh
+│       │   ├── home_service.sh
+│       │   ├── launch.sh
+│       │   ├── pick_objects.sh
+│       │   ├── test_navigation.sh
+│       │   └── test_slam.sh
+│       ├── slam_gmapping
+│       │   ├── gmapping
+│       │   ├── README.md
+│       │   └── slam_gmapping
+│       ├── teleop_twist_keyboard
+│       │   ├── CHANGELOG.rst
+│       │   ├── CMakeLists.txt
+│       │   ├── package.xml
+│       │   ├── README.md
+│       │   └── teleop_twist_keyboard.py
+│       ├── turtlebot
+│       │   ├── LICENSE
+│       │   ├── README.md
+│       │   ├── setup_create.sh
+│       │   ├── setup_kobuki.sh
+│       │   ├── turtlebot
+│       │   ├── turtlebot_bringup
+│       │   ├── turtlebot_capabilities
+│       │   ├── turtlebot_capabilities.rosinstall
+│       │   ├── turtlebot_description
+│       │   ├── turtlebot.rosinstall
+│       │   └── turtlebot_teleop
+│       ├── turtlebot_interactions
+│       │   ├── README.md
+│       │   ├── turtlebot_dashboard
+│       │   ├── turtlebot_interactions
+│       │   ├── turtlebot_interactive_markers
+│       │   └── turtlebot_rviz_launchers
+│       └── turtlebot_simulator
+│           ├── README.md
+│           ├── turtlebot_gazebo
+│           ├── turtlebot_simulator
+│           ├── turtlebot_simulator.rosinstall
+│           ├── turtlebot_stage
+│           └── turtlebot_stdr
+├── home.gif
+└── README.md
 ```
 
 ## Run the project  
@@ -107,7 +281,7 @@ Directory Structure
 ```
 git clone https://github.com/margrammas/HomeService.git
 ```
-* Navigate to the `src` folder and clone the necessary repositories  
+* Navigate to the `src` folder and clone the necessary repositories if needed (you might be able to skip this ste<p if rep is cloned properly) 
 ```
 cd /home/workspace/HomeService/catkin_ws/src  
 git clone https://github.com/ros-perception/slam_gmapping.git  
@@ -117,7 +291,7 @@ git clone https://github.com/turtlebot/turtlebot_simulator.git
 ```
 * Open the repository, make and source  
 ```
-cd cd /home/workspace/HomeService/catkin_ws
+cd /home/workspace/HomeService/catkin_ws
 catkin_make
 source devel/setup.bash
 ```
@@ -134,6 +308,3 @@ Enjoy!
 ```
 sudo apt-get update && sudo apt-get upgrade -y
 ```
-
-## Code Style  
-Please (do your best to) stick to [Google's C++ style guide](https://google.github.io/styleguide/cppguide.html).
