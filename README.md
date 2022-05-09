@@ -1,4 +1,4 @@
-# RoboND - Project5: Home Service Robot
+# RobotND - Project5: Home Service Robot
 
 Project 5 of Udacity Robotics Software Engineer Nanodegree
 
